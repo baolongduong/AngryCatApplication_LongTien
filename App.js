@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import LoginScreen from './components/LoginComponent';
+import { NativeBaseProvider, Center, View } from 'native-base';
+import TabBar from './components/TabBarComponent'
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import RegisterScreen from './components/RegisterComponent';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import { Provider } from 'react-redux';
+import  store  from './redux/store';
+
+
+const GuestStack = createStackNavigator();
+
+class App extends Component {
+    render() {
+        return (
+            <Provider store={store}>
+            <NavigationContainer>
+                <NativeBaseProvider>
+                <GuestStack.Navigator initialRouteName="Login">
+                <GuestStack.Screen name="Tab" component={TabBar} options={{headerShown: false}} />  
+                <GuestStack.Screen name="Login" component={LoginScreen} />
+                <GuestStack.Screen name="Register" component={RegisterScreen} />                   
+                </GuestStack.Navigator>
+                </NativeBaseProvider>
+                </NavigationContainer>   
+            </Provider>            
+        );
+    }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
