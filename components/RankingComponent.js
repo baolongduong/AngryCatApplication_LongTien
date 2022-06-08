@@ -2,16 +2,32 @@ import React, { Component } from 'react';
 import { Image, StatusBar, Box, HStack, Text, Avatar, Icon, Center, Heading, Stack, Link, Button, AspectRatio, ScrollView, VStack } from 'native-base';
 import { ImageBackground, StyleSheet, View } from "react-native";
 const image = { uri: "https://angrycatblnt.herokuapp.com/images/colorbackground.png" };
+import * as SecureStore from 'expo-secure-store'
 
 class Ranking extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      Username: '',
+      Password: '',
+    }
+  }
+
   render() {
+    // SecureStore.getItemAsync('userinfo').then(data=>{
+    // let UserInfo = JSON.parse(data);
+    // if(UserInfo)
+    // {
+    //   const {Username, Password} = UserInfo;
+    //   this.setState({ Username, Password });
+    // }    
+    // })
     return (
       <View style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
           <ScrollView>
             <Center>
-
-              <Box mt="2" alignItems="center">
+              <Box alignItems="center">
                 <Box maxW="80" rounded="lg" overflow="hidden" borderColor="#fdf5d8" borderWidth="1" _dark={{
                   borderColor: "coolGray.600",
                   backgroundColor: "gray.700"
@@ -27,13 +43,10 @@ class Ranking extends Component {
                         uri: "https://angrycatblnt.herokuapp.com/images/angrycatranking.png"
                       }} alt="image" />
                     </AspectRatio>
-
                   </Box>
-                  <VStack p="4" space={4} flex="1">
-                  <Avatar bg="green.500" source={{
-      uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-    }}></Avatar>
-    <Text>Your name</Text>
+                  <VStack p="2" space={4} flex="1" backgroundColor="white.100">
+                    <Text>{this.state.Username}</Text>
+                    <Text>{this.state.Password}</Text>
                   </VStack>
                 </Box>
               </Box>

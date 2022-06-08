@@ -1,192 +1,71 @@
 import React, { Component } from 'react';
-import { Image, StatusBar, Box, HStack, Text, IconButton, Icon, Center, Heading, Stack, Link, Button, AspectRatio, ScrollView } from 'native-base';
+import { Image, FlatList, Avatar, Box, HStack, Text, IconButton, Icon, Center, Heading, Stack, VStack, Spacer, Button, AspectRatio, ScrollView } from 'native-base';
 import { ImageBackground, StyleSheet, View } from "react-native";
 const image = { uri: "https://angrycatblnt.herokuapp.com/images/colorbackground.png" };
+import { MaterialIcons } from '@expo/vector-icons';
 
 class Dashboard extends Component {
+
+
     render() {
+        const data = [{
+            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+            fullName: "Aafreen Khan",
+            timeStamp: "12:47 PM",
+            recentText: "Good Day!",
+            avatarUrl: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        }, {
+            id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+            fullName: "Sujitha Mathur",
+            timeStamp: "11:11 PM",
+            recentText: "Cheer up, there!",
+            avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU"
+        }, {
+            id: "58694a0f-3da1-471f-bd96-145571e29d72",
+            fullName: "Anci Barroco",
+            timeStamp: "6:22 PM",
+            recentText: "Good Day!",
+            avatarUrl: "https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg"
+        }, {
+            id: "68694a0f-3da1-431f-bd56-142371e29d72",
+            fullName: "Aniket Kumar",
+            timeStamp: "8:56 PM",
+            recentText: "All the best",
+            avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU"
+        }];
+
         return (
             <View style={styles.container}>
-                <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
+                <ImageBackground source={image} resizeMode="cover" style={{ flex:1 , justifyContent: "center" }}>
                     <ScrollView>
-                        <Center>
-
-                            <Box mt="5" alignItems="center">
-                                <Box maxW="80" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
-                                    borderColor: "coolGray.600",
-                                    backgroundColor: "gray.700"
-                                }} _web={{
-                                    shadow: 2,
-                                    borderWidth: 0
-                                }} _light={{
-                                    backgroundColor: "gray.50"
-                                }}>
-                                    <Box>
-                                        <AspectRatio w="100%" ratio={16 / 9}>
-                                            <Image source={{
-                                                uri: "https://angrycatblnt.herokuapp.com/images/catpronunciation2.png"
-                                            }} alt="image" />
-                                        </AspectRatio>
-                                        <Center bg="info.500" _dark={{
-                                            bg: "violet.400"
-                                        }} _text={{
-                                            color: "warmGray.50",
-                                            fontWeight: "700",
-                                            fontSize: "xs"
-                                        }} position="absolute" bottom="0" px="3" py="1.5">
-                                            PRONUNCIATION
-                                        </Center>
-                                    </Box>
-                                    <Stack p="4" space={3}>
-                                        <Stack space={2}>
-                                            <Heading size="md" ml="-1">
-                                                IPA (Learn & Examples)
-                                            </Heading>
-                                            <Text fontSize="sm" color="coolGray.600" _dark={{
-                                                color: "warmGray.200"
-                                            }}>
-                                                Improve your English pronunciation
-                                            </Text>
-                                            <Button size="sm" colorScheme="pink">
-                                                Go
-                                            </Button>
-                                        </Stack>
-                                    </Stack>
-                                </Box>
-                            </Box>
-
-                            <Box mt="5" alignItems="center">
-                                <Box maxW="80" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
-                                    borderColor: "coolGray.600",
-                                    backgroundColor: "gray.700"
-                                }} _web={{
-                                    shadow: 2,
-                                    borderWidth: 0
-                                }} _light={{
-                                    backgroundColor: "gray.50"
-                                }}>
-                                    <Box>
-                                        <AspectRatio w="100%" ratio={16 / 9}>
-                                            <Image source={{
-                                                uri: "https://angrycatblnt.herokuapp.com/images/catgrammar.png"
-                                            }} alt="image" />
-                                        </AspectRatio>
-                                        <Center bg="violet.500" _dark={{
-                                            bg: "violet.400"
-                                        }} _text={{
-                                            color: "warmGray.50",
-                                            fontWeight: "700",
-                                            fontSize: "xs"
-                                        }} position="absolute" bottom="0" px="3" py="1.5">
-                                            GRAMMAR
-                                        </Center>
-                                    </Box>
-                                    <Stack p="4" space={3}>
-                                        <Stack space={2}>
-                                            <Heading size="md" ml="-1">
-                                                Grammar (Full Practice)
-                                            </Heading>
-                                            <Text fontSize="sm" color="coolGray.600" _dark={{
-                                                color: "warmGray.200"
-                                            }}>
-                                                Full of grammar lessons
-                                            </Text>
-                                            <Button size="sm" colorScheme="pink">
-                                                Go
-                                            </Button>
-                                        </Stack>
-                                    </Stack>
-                                </Box>
-                            </Box>
-
-
-                            <Box mt="5" alignItems="center">
-                                <Box maxW="80" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
-                                    borderColor: "coolGray.600",
-                                    backgroundColor: "gray.700"
-                                }} _web={{
-                                    shadow: 2,
-                                    borderWidth: 0
-                                }} _light={{
-                                    backgroundColor: "gray.50"
-                                }}>
-                                    <Box>
-                                        <AspectRatio w="100%" ratio={16 / 9}>
-                                            <Image source={{
-                                                uri: "https://angrycatblnt.herokuapp.com/images/catvocabulary.png"
-                                            }} alt="image" />
-                                        </AspectRatio>
-                                        <Center bg="orange.400" _dark={{
-                                            bg: "blue.400"
-                                        }} _text={{
-                                            color: "warmGray.50",
-                                            fontWeight: "700",
-                                            fontSize: "xs"
-                                        }} position="absolute" bottom="0" px="3" py="1.5">
-                                            VOCABULARY
-                                        </Center>
-                                    </Box>
-                                    <Stack p="4" space={3}>
-                                        <Stack space={2}>
-                                            <Heading size="md" ml="-1">
-                                                Vocabulary (Full Practice)
-                                            </Heading>
-                                            <Text fontSize="sm" color="coolGray.600" _dark={{
-                                                color: "warmGray.200"
-                                            }}>
-                                                Improve your English vocabulary
-                                            </Text>
-                                            <Button size="sm" colorScheme="pink">
-                                                Go
-                                            </Button>
-                                        </Stack>
-                                    </Stack>
-                                </Box>
-                            </Box>
-
-                            <Box mt="5" mb="5" alignItems="center">
-                                <Box maxW="80" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
-                                    borderColor: "coolGray.600",
-                                    backgroundColor: "gray.700"
-                                }} _web={{
-                                    shadow: 2,
-                                    borderWidth: 0
-                                }} _light={{
-                                    backgroundColor: "gray.50"
-                                }}>
-                                    <Box>
-                                        <AspectRatio w="100%" ratio={16 / 9}>
-                                            <Image source={{
-                                                uri: "https://angrycatblnt.herokuapp.com/images/catspeaking.png"
-                                            }} alt="image" />
-                                        </AspectRatio>
-                                        <Center bg="green.400" _dark={{
-                                            bg: "violet.400"
-                                        }} _text={{
-                                            color: "warmGray.50",
-                                            fontWeight: "700",
-                                            fontSize: "xs"
-                                        }} position="absolute" bottom="0" px="3" py="1.5">
-                                            SPEAKING
-                                        </Center>
-                                    </Box>
-                                    <Stack p="4" space={3}>
-                                        <Stack space={2}>
-                                            <Heading size="md" ml="-1">
-                                                Greeting with Topics
-                                            </Heading>
-                                            <Text fontSize="sm" color="coolGray.600" _dark={{
-                                                color: "warmGray.200"
-                                            }}>
-                                                Improve your English speaking
-                                            </Text>
-                                            <Button size="sm" colorScheme="pink">
-                                                Go
-                                            </Button>
-                                        </Stack>
-                                    </Stack>
-                                </Box>
-                            </Box>
+                        <Center flex={1}>
+                            <Box mt={10}>
+                                <FlatList data={data} numColumns={2} renderItem={({
+                                    item
+                                }) => <Box borderBottomWidth="1" _dark={{
+                                    borderColor: "muted.50"
+                                }} borderColor="muted.800" pl="4" pr="5" py="2">
+                                        <HStack space={3} justifyContent="space-between">
+                                            <Avatar size="48px" source={{
+                                                uri: item.avatarUrl
+                                            }} />
+                                            <VStack>
+                                                <Text _dark={{
+                                                    color: "warmGray.50"
+                                                }} color="coolGray.800" bold>
+                                                    {item.fullName}
+                                                </Text>
+                                                <Text color="coolGray.600" _dark={{
+                                                    color: "warmGray.200"
+                                                }}>
+                                                    {item.recentText}
+                                                </Text>
+                                            </VStack>
+                                            <Spacer />
+                                          
+                                        </HStack>
+                                    </Box>} keyExtractor={item => item.id} />
+                            </Box>;
                         </Center>
                     </ScrollView>
                 </ImageBackground>

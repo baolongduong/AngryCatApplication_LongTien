@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import LoginScreen from './components/LoginComponent';
 import { NativeBaseProvider, Center, View } from 'native-base';
-import TabBar from './components/TabBarComponent'
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import LoginScreen from './components/LoginComponent';
 import RegisterScreen from './components/RegisterComponent';
+import TabBar from './components/TabBarComponent'
+import { initializeApp } from 'firebase/app';
 
-import { Provider } from 'react-redux';
-import  store  from './redux/store';
-
+const firebaseConfig = {databaseURL: 'https://angry-cat-react-native-default-rtdb.firebaseio.com/' };
+initializeApp(firebaseConfig);
 
 const GuestStack = createStackNavigator();
 
 class App extends Component {
     render() {
         return (
-            <Provider store={store}>
             <NavigationContainer>
                 <NativeBaseProvider>
                 <GuestStack.Navigator initialRouteName="Login">
@@ -24,8 +23,7 @@ class App extends Component {
                 <GuestStack.Screen name="Register" component={RegisterScreen} />                   
                 </GuestStack.Navigator>
                 </NativeBaseProvider>
-                </NavigationContainer>   
-            </Provider>            
+                </NavigationContainer>            
         );
     }
 }
