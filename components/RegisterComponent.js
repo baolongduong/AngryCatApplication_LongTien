@@ -43,7 +43,7 @@ class Register extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
-          <Center>
+          <Center >
             <Box safeArea p="2" py="8" w="90%" maxW="290">
               <Heading size="md" fontWeight="600" color="coolGray.800" _dark={{
                 color: "warmGray.50"
