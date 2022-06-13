@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from './DashboardComponent';
 import Ranking from './RankingComponent';
+import Info from './InfoComponent'
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +24,13 @@ class TabBar extends Component {
           }}
         />
         <Tab.Screen name="Ranking" component={Ranking}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="star" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen name="Info" component={Info}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name="star" color={color} size={size} />
