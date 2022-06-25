@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { MaterialIcons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ranking from './RankingComponent';
+
+
+
 import DashboardNavigation from './DashboardNavigator';
 import NoteVocabulary from './NoteVocabularyComponent';
 import Account from './AccountComponent';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -47,6 +51,7 @@ class TabBar extends Component {
           }}
           tabBarOptions={{ showLabel: false }}
         />
+        
       </Tab.Navigator>
 
     );
