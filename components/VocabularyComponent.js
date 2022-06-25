@@ -3,8 +3,10 @@ import { Image, FlatList, Avatar, Box, HStack, Text, IconButton, Icon, Center, H
 import { ImageBackground, StyleSheet, View } from "react-native";
 const image = { uri: "https://angrycatblnt.herokuapp.com/images/colorbackground.png" };
 import * as SecureStore from 'expo-secure-store';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { getDatabase, ref, child, onValue, get } from 'firebase/database';
+import VocabularyTopic from './vocabulary/VocabularyTopic';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -13,82 +15,64 @@ class Vocabulary extends Component {
     super(props);
     this.state = {
       data: [],
+      vocalId: 0,
     }
   }
 
-  componentDidMount()
-  {
-   const dbRef = ref(getDatabase());
-         get(child(dbRef, 'vocabulary')).then((snapshot) => {
-                 const account = snapshot.val();
-                 console.log(account);
-                 var items = [];
-                 snapshot.forEach((child)=>
-                 {
-                  items.push({
-                  id: child.val().id,
-                  type:child.val().type
-                })
-                 });
-                 this.setState({ data: items })
-                 console.log(this.state.data);
-         })
+  componentDidMount() {
+    const dbRef = ref(getDatabase());
+    get(child(dbRef, 'vocabulary')).then((snapshot) => {
+      const account = snapshot.val();
+      //  console.log(account);
+      var items = [];
+      snapshot.forEach((child) => {
+        items.push({
+          id: child.val().id,
+          type: child.val().type,
+          icon: child.val().icon
+        })
+      });
+      this.setState({ data: items })
+      //  console.log(this.state.data);                
+    })
   }
 
-  componentDidUpdate(previousProps, previousState) {
-    if (previousState.data !== this.state.data) {
-      this.componentDidMount();
-    }
+  getVocabularyTopicID(id) {
+    console.log("Da lay id: " + id);
+    SecureStore
+      .setItemAsync('vocabularyId', JSON.stringify({ id: id }))
+      .catch((error) => alert('Could not save user info', error));
+    this.props.navigation.navigate("VocabularyTopic");
   }
 
   render() {
-    // const data = [{
-    //   id: "1",
-    //   courseName: "Pronunciation",
-    //   courseContent: "IPA and Examples",
-    //   avatarUrl: "gift-outline",
-    // }, {
-    //   id: "2",
-    //   courseName: "Vocabulary",
-    //   courseContent: "Popular Topics and Quizzes",
-    //   avatarUrl: "american-football-sharp"
-    // }, {
-    //   id: "3",
-    //   courseName: "Speaking",
-    //   courseContent: "Hot Speaking Topics",
-    //   avatarUrl: "analytics"
-    // }, {
-    //   id: "4",
-    //   courseName: "Grammar",
-    //   courseContent: "Basic Sentences & Quizzes",
-    //   avatarUrl: "chevron-back-circle"
-
-    // }];
     return (
       <View style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
           <Center flex={1} >
             <Box borderRadius={10}>         
-              <FlatList numColumns={2} data={this.state.data}          
+              <FlatList numColumns={3} data={this.state.data}          
               renderItem={({
                 item
               }) =>
-                <Box justifyContent="space-between" alignItems="center" backgroundColor="white" width={150} borderRadius={100} margin={4} borderBottomWidth="1" _dark={{
+              <TouchableOpacity onPress={() => this.getVocabularyTopicID(item.id)}>
+                <Box justifyContent="space-between" mt={2} alignItems="center" backgroundColor="white" height={100} width={100} margin={2} borderRadius={100} borderBottomWidth="1" _dark={{
                   borderColor: "muted.50"
-                }} borderColor="coolGray.200" pl="2" pr="2" py="5">
-                  <Icon size="6xl" color="coolGray.500" icon as={Ionicons} name="gift-outline" />
+                }} borderColor="coolGray.200" py="6">               
+                  <Icon alignItems="center" size="4xl" color="coolGray.500" icon as={FontAwesome} name={item.icon} />
                   <Spacer />
                   <HStack>
-                    <Text _dark={{
+                    <Text   _dark={{
                       color: "warmGray.50"
-                    }} fontStyle="normal" fontSize={12} color="#cf8193" bold>   
+                    }} textAlign="center" fontStyle="normal" pt={2} fontSize={6} color="#cf8193" bold>   
                     {item.type}              
                     </Text> 
-                  </HStack>
+                  </HStack>              
                 </Box>
+                </TouchableOpacity>
               }     keyExtractor={item=>item.id} /> 
             </Box>
-            
+
           </Center>
         </ImageBackground>
       </View>
