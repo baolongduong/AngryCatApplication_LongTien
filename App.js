@@ -7,6 +7,7 @@ import RegisterScreen from './components/RegisterComponent';
 import TabBar from './components/TabBarComponent'
 import { initializeApp } from 'firebase/app';
 
+
 const firebaseConfig = {databaseURL: 'https://angry-cat-react-native-default-rtdb.firebaseio.com/' };
 initializeApp(firebaseConfig);
 

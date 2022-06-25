@@ -1,76 +1,91 @@
 import React, { Component } from 'react';
 import { Image, FlatList, Avatar, Box, HStack, Text, IconButton, Icon, Center, Heading, Stack, VStack, Spacer, Button, AspectRatio, ScrollView } from 'native-base';
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { ImageBackground, StyleSheet, View, SafeAreaView } from "react-native";
 const image = { uri: "https://angrycatblnt.herokuapp.com/images/colorbackground.png" };
-import { MaterialIcons } from '@expo/vector-icons';
-
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { VirtualizedList } from 'react-native-web';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import Pronunciation from './PronunciationComponent';
+       
 class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+      }
 
+    DashboardNavigation(name)
+    {
+        this.props.navigation.navigate(name);
+    }
 
     render() {
         const data = [{
-            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-            fullName: "Aafreen Khan",
-            timeStamp: "12:47 PM",
-            recentText: "Good Day!",
-            avatarUrl: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+            id: "1",
+            courseName: "Pronunciation",
+            courseContent: "IPA and Examples",
+            avatarUrl: "https://angrycatblnt.herokuapp.com/images/pronunciation.png",
         }, {
-            id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-            fullName: "Sujitha Mathur",
-            timeStamp: "11:11 PM",
-            recentText: "Cheer up, there!",
-            avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU"
+            id: "2",
+            courseName: "Vocabulary",
+            courseContent: "Popular Topics and Quizzes",
+            avatarUrl: "https://angrycatblnt.herokuapp.com/images/vocabulary.png"          
         }, {
-            id: "58694a0f-3da1-471f-bd96-145571e29d72",
-            fullName: "Anci Barroco",
-            timeStamp: "6:22 PM",
-            recentText: "Good Day!",
-            avatarUrl: "https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg"
+            id: "3",
+            courseName: "Speaking",
+            courseContent: "Hot Speaking Topics",
+            avatarUrl: "https://angrycatblnt.herokuapp.com/images/speaking_2.png"
         }, {
-            id: "68694a0f-3da1-431f-bd56-142371e29d72",
-            fullName: "Aniket Kumar",
-            timeStamp: "8:56 PM",
-            recentText: "All the best",
-            avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU"
-        }];
+            id: "4",
+            courseName: "Grammar",
+            courseContent: "Basic Sentences & Quizzes",
+            avatarUrl: "https://angrycatblnt.herokuapp.com/images/grammar.png"
+           
+        }
+       ];
 
-        return (
+        return (           
             <View style={styles.container}>
                 <ImageBackground source={image} resizeMode="cover" style={{ flex:1 , justifyContent: "center" }}>
-                    <ScrollView>
-                        <Center flex={1}>
-                            <Box mt={10}>
-                                <FlatList data={data} numColumns={2} renderItem={({
+                        <Center flex={1} >
+                        <AspectRatio w="100%" ratio={16 / 9}>
+                      <Image mt={5} source={{
+                        uri: "https://angrycatblnt.herokuapp.com/images/welcome.png"
+                      }} alt="image" />
+                    </AspectRatio>
+                            <Box mt={5}  backgroundColor="white" height={387} borderRadius={10}>                       
+                                <FlatList data={data}  renderItem={({
                                     item
                                 }) => <Box borderBottomWidth="1" _dark={{
                                     borderColor: "muted.50"
-                                }} borderColor="muted.800" pl="4" pr="5" py="2">
-                                        <HStack space={3} justifyContent="space-between">
+                                }} borderColor="coolGray.200" pl="2" pr="2" py="5">
+                                        <HStack space={3} justifyContent="space-between" >
                                             <Avatar size="48px" source={{
                                                 uri: item.avatarUrl
                                             }} />
                                             <VStack>
-                                                <Text _dark={{
+                                                <Text _dark={{                                               
                                                     color: "warmGray.50"
-                                                }} color="coolGray.800" bold>
-                                                    {item.fullName}
+                                                }}   fontSize={18} color="#cf8193" bold>
+                                                    {item.courseName}
                                                 </Text>
+                                                
                                                 <Text color="coolGray.600" _dark={{
                                                     color: "warmGray.200"
                                                 }}>
-                                                    {item.recentText}
+                                                    {item.courseContent}
                                                 </Text>
                                             </VStack>
-                                            <Spacer />
-                                          
+                                            <Spacer/>  
+                                            <VStack>
+                                            <Button onPress={() => this.DashboardNavigation(item.courseName)}  backgroundColor="#cf8193" flexDirection="column" alignSelf="stretch"><Icon size="2xl" color="white" icon as={Ionicons} name="play-circle-outline"/></Button>
+                                            </VStack>                                     
                                         </HStack>
                                     </Box>} keyExtractor={item => item.id} />
-                            </Box>;
+                            </Box>
                         </Center>
-                    </ScrollView>
                 </ImageBackground>
-
             </View>
+
         );
     }
 }

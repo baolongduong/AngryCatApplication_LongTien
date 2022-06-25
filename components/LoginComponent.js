@@ -21,6 +21,9 @@ class LoginScreen extends Component {
                 const account = snapshot.val();
                 if (account.Password === this.state.Password) {
                     console.log(account)
+                    SecureStore
+                    .setItemAsync('userinfo', JSON.stringify({ Username: this.state.Username, Password: this.state.Password }))
+                    .catch((error) => alert('Could not save user info', error));
                     alert('Come on baby!');
                     this.props.navigation.navigate('Tab');
                     if (this.state.remember == true) {
@@ -72,7 +75,7 @@ class LoginScreen extends Component {
                                     <FormControl.Label>Password</FormControl.Label>
                                     <Input backgroundColor={"white"} type="password" placeholder="Enter your password" onChangeText={(text) => this.setState({ Password: text })} />
                                 </FormControl>
-                                <Button mt="2" colorScheme="pink" onPress={() => this.handleLogin()}>
+                                <Button mt="2" backgroundColor="pink.400" onPress={() => this.handleLogin()}>
                                     Sign in
                                 </Button>
                                 <HStack mt="3" justifyContent="center">

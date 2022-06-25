@@ -14,14 +14,14 @@ class Ranking extends Component {
   }
 
   render() {
-    // SecureStore.getItemAsync('userinfo').then(data=>{
-    // let UserInfo = JSON.parse(data);
-    // if(UserInfo)
-    // {
-    //   const {Username, Password} = UserInfo;
-    //   this.setState({ Username, Password });
-    // }    
-    // })
+    SecureStore.getItemAsync('userinfo').then(data=>{
+    let UserInfo = JSON.parse(data);
+    if(UserInfo)
+    {
+      const {Username, Password} = UserInfo;
+      this.setState({ Username, Password });
+    }    
+    })
     return (
       <View style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
@@ -44,10 +44,10 @@ class Ranking extends Component {
                       }} alt="image" />
                     </AspectRatio>
                   </Box>
-                  <VStack p="2" space={4} flex="1" backgroundColor="white.100">
+                <VStack p="2" space={4} flex="1" backgroundColor="white.100">
                     <Text>{this.state.Username}</Text>
                     <Text>{this.state.Password}</Text>
-                  </VStack>
+                  </VStack>  
                 </Box>
               </Box>
             </Center>
