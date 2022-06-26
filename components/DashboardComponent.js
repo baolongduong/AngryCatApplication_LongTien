@@ -80,7 +80,7 @@ class Dashboard extends Component {
                                             <Button onPress={() => this.DashboardNavigation(item.courseName)}  backgroundColor="#cf8193" flexDirection="column" alignSelf="stretch"><Icon size="2xl" color="white" icon as={Ionicons} name="play-circle-outline"/></Button>
                                             </VStack>                                     
                                         </HStack>
-                                    </Box>} keyExtractor={item => item.id} />
+                                    </Box>} keyExtractor={item =>item.id} />
                             </Box>
                         </Center>
                 </ImageBackground>
