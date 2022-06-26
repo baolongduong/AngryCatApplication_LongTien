@@ -17,7 +17,12 @@ class Account extends Component {
     }
     this.state = {
       userData: [],
+      Email:"",
+      UserName: "",
+      Password:"",
+      Name:"",
     }
+   
    
   }
 
@@ -82,6 +87,8 @@ componentDidMount() {
   })
 }
 
+
+
   render() {
 
     // SecureStore.getItemAsync('userinfo').then(data=>{
@@ -92,7 +99,36 @@ componentDidMount() {
     //     this.setState({ Username, Password });
     //   }    
     //   })
-      
+    function updateDataBase(Email, Password, UserName, Name, Value) {
+      const dbRef = ref(getDatabase());
+      set(child(dbRef, 'user/info/' + UserName), {
+          Username: UserName,
+          Email: Email,
+          Name: Name, 
+          Password: Password,
+      }, function (error) {
+        if (error) {
+          // The write failed...
+          alert('Lỗi')
+        } else {
+          // Data saved successfully!
+          alert('Thành Công !!!')
+          this.setState ({showModal:Value})
+        }
+      });
+    
+    }
+//     const createThreeButtonAlert = (item) =>
+//   Alert.alert(
+//     "Alert Title",
+//     "My Alert Msg",
+//     [{ text: "Sửa", onPress: () =>{
+//       console.log("OK Pressed")
+//       updateDataBase(Email, Password, UserName)
+//     } }
+//   ],
+//   { cancelable: false }
+// );
 
     return (
       
@@ -160,19 +196,19 @@ componentDidMount() {
       <Modal.Body>
         <FormControl>
           <FormControl.Label>UserName:</FormControl.Label>
-          <Input />
+          <Input onChangeText={(text) => this.setState({ UserName: text })} />
         </FormControl>
         <FormControl mt="3">
           <FormControl.Label>Email:</FormControl.Label>
-          <Input />
+          <Input onChangeText={(text) => this.setState({ Email: text })}/>
         </FormControl>
         <FormControl mt="3">
           <FormControl.Label>Password:</FormControl.Label>
-          <Input />
+          <Input onChangeText={(text) => this.setState({ Password: text })} />
         </FormControl>
         <FormControl mt="3">
           <FormControl.Label>Name:</FormControl.Label>
-          <Input />
+          <Input onChangeText={(text) => this.setState({ Name: text })} />
         </FormControl>
       </Modal.Body>
       <Modal.Footer>
@@ -180,7 +216,10 @@ componentDidMount() {
           <Button variant="ghost" colorScheme="pink" onPress={() => this.setState({showModal:false})}>
             Cancel
           </Button>
-          <Button backgroundColor="pink.400" onPress={() => this.setState({showModal:false})}>
+          <Button backgroundColor="pink.400" onPress={() => updateDataBase(this.state.Email,
+            this.state.Password, 
+            this.state.UserName, 
+            this.state.Name, false) }>
             Save
           </Button>
         </Button.Group>
