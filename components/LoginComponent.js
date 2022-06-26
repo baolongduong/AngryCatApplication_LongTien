@@ -1,6 +1,6 @@
 import { getDatabase, ref, child, push, set, get } from 'firebase/database';
 import React, { Component } from 'react';
-import { Box, HStack, Text, Center, Heading, VStack, FormControl, Input, Link, Button } from 'native-base';
+import { Alert, Box, HStack, Text, Center, Heading, VStack, FormControl, Input, Link, Button, IconButton, CloseIcon, Collapse } from 'native-base';
 import { ImageBackground, StyleSheet, View } from "react-native";
 import * as SecureStore from 'expo-secure-store'
 const image = { uri: "https://angrycatblnt.herokuapp.com/images/newloginbackground.png" };
@@ -11,9 +11,12 @@ class LoginScreen extends Component {
         this.state = {
             Username: '',
             Password: '',
+            remember: false,
+            errorMessage: '',
+            alertStatus: false
         }
     }
-    
+
     handleLogin() {
         const dbRef = ref(getDatabase());
         get(child(dbRef, 'user/info/' + this.state.Username)).then((snapshot) => {
@@ -22,9 +25,8 @@ class LoginScreen extends Component {
                 if (account.Password === this.state.Password) {
                     console.log(account)
                     SecureStore
-                    .setItemAsync('userinfo', JSON.stringify({ Username: this.state.Username, Password: this.state.Password }))
-                    .catch((error) => alert('Could not save user info', error));
-                    alert('Come on baby!');
+                        .setItemAsync('userinfo', JSON.stringify({ Username: this.state.Username, Password: this.state.Password }))
+                        .catch((error) => alert('Could not save user info', error));
                     this.props.navigation.navigate('Tab');
                     if (this.state.remember == true) {
                         SecureStore
@@ -32,13 +34,16 @@ class LoginScreen extends Component {
                             .catch((error) => alert('Could not save user info', error));
                     }
                 } else {
-                    alert('Invalid password!');
+                    this.setState({alertStatus: true })
+                    this.setState({ errorMessage: 'This is invalid password!' })
                     SecureStore
                         .deleteItemAsync('userinfo')
                         .catch((error) => alert('Could not delete user info', error));
                 }
-            } else {
-                alert('Invalid username!');
+            }          
+            else {
+                this.setState({alertStatus: true })
+                this.setState({ errorMessage: 'This is invalid username!' })
                 SecureStore
                     .deleteItemAsync('userinfo')
                     .catch((error) => alert('Could not delete user info', error));
@@ -53,7 +58,31 @@ class LoginScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Collapse isOpen={this.state.alertStatus}>
+                    <Alert w="100%" maxW="400" status="warning" colorScheme="warning">
+                        <VStack space={2} flexShrink={1} w="100%">
+                            <HStack flexShrink={1} space={10} alignItems="center" justifyContent="space-between">
+                                <HStack flexShrink={1} space={10} alignItems="center">
+                                    <Alert.Icon />
+                                    <Text fontSize="md" fontWeight="medium" color="coolGray.800">
+                                        Warning Validation
+                                    </Text>
+                                </HStack>
+                                <IconButton onPress={()=> this.setState ({alertStatus: false}) } variant="unstyled" _focus={{
+                                    borderWidth: 0
+                                }} icon={<CloseIcon size="3" color="coolGray.600" />} />
+                            </HStack>
+                            <Box alignItems="center" _text={{
+                                color: "coolGray.600"
+                            }}>
+                                {this.state.errorMessage}
+                            </Box>
+                        </VStack>
+                    </Alert>
+                </Collapse>
                 <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
+
+
                     <Center>
                         <Box safeArea p="2" py="8" w="90%" maxW="290">
                             <Heading size="md" fontWeight="600" color="coolGray.800" _dark={{
@@ -71,6 +100,7 @@ class LoginScreen extends Component {
                                     <FormControl.Label>Username</FormControl.Label>
                                     <Input backgroundColor={"white"} placeholder="Enter your username" onChangeText={(text) => this.setState({ Username: text })} />
                                 </FormControl>
+
                                 <FormControl>
                                     <FormControl.Label>Password</FormControl.Label>
                                     <Input backgroundColor={"white"} type="password" placeholder="Enter your password" onChangeText={(text) => this.setState({ Password: text })} />
@@ -97,6 +127,8 @@ class LoginScreen extends Component {
                         </Box>
                     </Center>
                 </ImageBackground>
+
+
             </View>
         );
     }

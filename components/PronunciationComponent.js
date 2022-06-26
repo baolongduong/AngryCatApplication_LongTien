@@ -7,32 +7,6 @@ import { Audio } from 'expo-av';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { getDatabase, ref, child, onValue } from 'firebase/database';
 
-const TransAlert = () =>
-{
-  <Center>
-  <Alert w="90%" maxW="400" status="info" colorScheme="info">
-  <VStack space={2} flexShrink={1} w="100%">
-    <HStack flexShrink={1} space={2} alignItems="center" justifyContent="space-between">
-      <HStack flexShrink={1} space={2} alignItems="center">
-        <Alert.Icon />
-        <Text fontSize="md" fontWeight="medium" color="coolGray.800">
-          We are going live in July!
-        </Text>
-      </HStack>
-      <IconButton variant="unstyled" _focus={{
-      borderWidth: 0
-    }} icon={<CloseIcon size="3" color="coolGray.600" />} />
-    </HStack>
-    <Box pl="6" _text={{
-    color: "coolGray.600"
-  }}>
-      We are happy to announce that we are going live on July 28th. Get
-      ready!
-    </Box>
-  </VStack>
-</Alert>
-</Center>
-}
 
 class Pronunciation extends Component {
   constructor(props) {
@@ -90,14 +64,12 @@ class Pronunciation extends Component {
     if(this.state.id == 44)
     {
       return value = true
-    }
-    
+    }  
   }
  
   setTranslate()
   {
      alert(this.state.translate);
-    // return <TransAlert></TransAlert>
     
   }
 
