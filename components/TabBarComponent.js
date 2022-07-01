@@ -24,14 +24,6 @@ class TabBar extends Component {
             ),
           }}
         />         
-         <Tab.Screen name="Note" component={NoteVocabulary}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="book" color={color} size={size} />
-            ),
-          }}
-          tabBarOptions={{ showLabel: false }}
-        />
         <Tab.Screen name="Ranking" component={Ranking}
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -48,7 +40,14 @@ class TabBar extends Component {
           }}
           tabBarOptions={{ showLabel: false }}
         />
-        
+                 <Tab.Screen name="About" component={NoteVocabulary}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="explore" color={color} size={size} />
+            ),
+          }}
+          tabBarOptions={{ showLabel: false }}
+        />
       </Tab.Navigator>
 
     );

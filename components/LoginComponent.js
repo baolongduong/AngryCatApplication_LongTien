@@ -1,8 +1,9 @@
 import { getDatabase, ref, child, push, set, get } from 'firebase/database';
 import React, { Component } from 'react';
-import { Alert, Box, HStack, Text, Center, Heading, VStack, FormControl, Input, Link, Button, IconButton, CloseIcon, Collapse } from 'native-base';
+import {  Alert, Box, HStack, Text, Center, Heading, VStack, FormControl, Input, Link, Button, IconButton, CloseIcon, Collapse } from 'native-base';
 import { ImageBackground, StyleSheet, View } from "react-native";
 import * as SecureStore from 'expo-secure-store'
+
 const image = { uri: "https://angrycatblnt.herokuapp.com/images/newloginbackground.png" };
 
 class LoginScreen extends Component {
@@ -58,7 +59,9 @@ class LoginScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
+
                 <Collapse isOpen={this.state.alertStatus}>
+
                     <Alert w="100%" maxW="400" status="warning" colorScheme="warning">
                         <VStack space={2} flexShrink={1} w="100%">
                             <HStack flexShrink={1} space={10} alignItems="center" justifyContent="space-between">
@@ -80,9 +83,9 @@ class LoginScreen extends Component {
                         </VStack>
                     </Alert>
                 </Collapse>
+
+
                 <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
-
-
                     <Center>
                         <Box safeArea p="2" py="8" w="90%" maxW="290">
                             <Heading size="md" fontWeight="600" color="coolGray.800" _dark={{
@@ -105,7 +108,7 @@ class LoginScreen extends Component {
                                     <FormControl.Label>Password</FormControl.Label>
                                     <Input backgroundColor={"white"} type="password" placeholder="Enter your password" onChangeText={(text) => this.setState({ Password: text })} />
                                 </FormControl>
-                                <Button mt="2" backgroundColor="pink.400" onPress={() => this.handleLogin()}>
+                                <Button mt="2" color="white" backgroundColor="pink.400" onPress={() => this.handleLogin()}>
                                     Sign in
                                 </Button>
                                 <HStack mt="3" justifyContent="center">

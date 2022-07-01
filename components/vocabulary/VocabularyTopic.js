@@ -1,7 +1,7 @@
 import React, { Component, useEffect } from 'react';
 import { Heading, FlatList, Modal, Box, HStack, Text, Link, Icon, Center, Image, Stack, VStack, Badge, Button, AspectRatio, ScrollView } from 'native-base';
 import { ImageBackground, StyleSheet, View } from "react-native";
-const image = { uri: "https://angrycatblnt.herokuapp.com/images/colorbackground.png" };
+const image = { uri: "https://angrycatblnt.herokuapp.com/images/yellowquiz.png" };
 import * as SecureStore from 'expo-secure-store';
 import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { getDatabase, ref, child, onValue, get } from 'firebase/database';
@@ -87,12 +87,8 @@ class VocabularyTopic extends Component {
     this.setState({showModal: modalVisible})
   }
   
-vocabularyQuiz(quizId)
+vocabularyQuiz()
 {
-  console.log("Da lay id: " + quizId);
-  SecureStore
-    .setItemAsync('quizId', JSON.stringify({ quizId: quizId }))
-    .catch((error) => alert('Could not save quiz id', error));
   this.props.navigation.navigate("TopicQuiz");
 }
 
@@ -108,38 +104,41 @@ vocabularyQuiz(quizId)
             </Text> */}
             <VStack mt={3}>
               <Badge // bg="red.400"
-                colorScheme="success" rounded="full" mb={-4} mr={-4} zIndex={1} variant="solid" alignSelf="flex-end" _text={{
+                colorScheme="success"  rounded="full" mb={-5} mr={-9} zIndex={1} variant="solid" alignSelf="flex-end" _text={{
                   fontSize: 12
                 }}>
                 {this.state.vocab.level}
               </Badge>
-              <Button mx={{
+              <Heading mx={{
                 base: "auto",
                 md: 0
-              }} p="2" bg="pink.500" _text={{
-                fontSize: 14
-              }}>
-                {this.state.vocab.type}
-              </Button>
+              }} p="2" color="amber.800">
+              {this.state.vocab.type}
+                </Heading>           
             </VStack>
-
+            <VStack mt={1}  mb={3}> 
+            <Button onPress={()=>this.vocabularyQuiz()} borderRadius={20} color="white" backgroundColor="#cf8193">
+              Attempt Quiz ⧁
+              </Button>                 
+            </VStack>
+            
             <Center flex={1} >
-              <Box backgroundColor="white" pt={1} pb={2} mt={3}  mb={3} width={350} borderRadius={50}>
+              <Box backgroundColor="white" pt={1} pb={2} mt={3}  mb={3} height="100%" width="380" >
                 <FlatList numColumns={1} data={this.state.listWords} renderItem={({
                   item
-                }) => <Box borderBottomWidth="1" _dark={{
+                }) => <Box borderBottomWidth="1"  _dark={{
                   borderColor: "muted.50"
-                }} borderColor="coolGray.200" py="7" pr="3" pl="3">
-                    <HStack pl={2} pr={2} space={9} justifyContent="space-between" >   
-                    <VStack>                   
+                }} borderColor="coolGray.200" py="7" pr="4" pl="4">
+                    <HStack pl={2} pr={2} space={13} justifyContent="space-between" >   
+                    <VStack alignSelf="center">                   
                       <Text _dark={{
                         color: "warmGray.50"
-                      }} color="lime.500" bold>
+                      }} color="amber.700" fontSize="md" bold>
                         {item.name}
                       </Text>
                       </VStack>
-                      <VStack> 
-                      <Text color="coolGray.600" _dark={{
+                      <VStack alignSelf="center"> 
+                      <Text color="coolGray.400" _dark={{
                         color: "warmGray.200"
                       }}>
                         {item.phonetic}
@@ -147,18 +146,14 @@ vocabularyQuiz(quizId)
                       </VStack>
 
                       <VStack>  
-                        <Button onPress={() => this.vocabularyDetails(true,item.wId)} borderRadius={20} flexDirection="column" alignSelf="stretch" backgroundColor="pink.500" height={7} width="100%" ><Icon size="lg" color="white" icon as={Ionicons} name="book-outline"/>
+                        <Button onPress={() => this.vocabularyDetails(true,item.wId)} borderRadius={20} flexDirection="column" alignSelf="center" backgroundColor="warning.300" height={10} width="100%" ><Icon size="lg" color="white" icon as={Ionicons} name="reader"/>
                         </Button>
                         </VStack>
                     </HStack>                 
                   </Box>} keyExtractor={item => item.wId} />
               </Box>
             </Center>
-            <VStack mt={1}  mb={3}> 
-            <Button onPress={()=>this.vocabularyQuiz(this.state.vocab.id)} borderRadius={20} color="white" backgroundColor="danger.500">
-              Attempt Quiz &gt;
-              </Button>                 
-            </VStack>
+            
 
             <Box>
               <Modal isOpen={this.state.showModal} onClose={() => this.setState({ showModal: false })}>
@@ -201,13 +196,7 @@ vocabularyQuiz(quizId)
                    
                     <Button backgroundColor="#cf8193" alignSelf="center" borderRadius={100} width={20} onPress={() => this.pronunciationPlay()} ><Icon size="2xl" color="white" icon as={MaterialIcons} name="play-arrow" /></Button>
                    
-                      {/* <HStack>                     
-                       <Text color="coolGray.600" size="xs" _dark={{
-                          color: "warmGray.200"
-                        }} fontWeight="100">
-                            {this.state.translate}
-                        </Text>
-                      </HStack>                    */}
+                   
                   </Stack>
                 </Box>
               </Box>

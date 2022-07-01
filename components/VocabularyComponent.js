@@ -1,7 +1,7 @@
 import React, { Component, useEffect } from 'react';
 import { Image, FlatList, Avatar, Box, HStack, Text, IconButton, Icon, Center, Heading, Stack, VStack, Spacer, Button, AspectRatio, ScrollView } from 'native-base';
 import { ImageBackground, StyleSheet, View } from "react-native";
-const image = { uri: "https://angrycatblnt.herokuapp.com/images/colorbackground.png" };
+const image = { uri: "https://angrycatblnt.herokuapp.com/images/yellowquiz.png" };
 import * as SecureStore from 'expo-secure-store';
 import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { getDatabase, ref, child, onValue, get } from 'firebase/database';
@@ -56,19 +56,22 @@ class Vocabulary extends Component {
                 item
               }) =>
               <TouchableOpacity onPress={() => this.getVocabularyTopicID(item.id)}>
-                <Box justifyContent="space-between" mt={2} alignItems="center" backgroundColor="white" height={100} width={100} margin={2} borderRadius={100} borderBottomWidth="1" _dark={{
+                
+                <Box borderRadius={20} justifyContent="space-between" borderColor="coolGray.300" borderRightWidth="1" borderBottomWidth={1} mt={4} mb={1} alignItems="center" backgroundColor="white" height={110} width={100} margin={2}  _dark={{
                   borderColor: "muted.50"
-                }} borderColor="coolGray.200" py="6">               
-                  <Icon alignItems="center" size="4xl" color="coolGray.500" icon as={FontAwesome} name={item.icon} />
-                  <Spacer />
-                  <HStack>
-                    <Text   _dark={{
+                }}  py="5"  >               
+                  <Icon alignSelf="center" size="4xl" color="#cf8193" icon as={FontAwesome} name={item.icon} /> 
+
+                    <Text    _dark={{
                       color: "warmGray.50"
-                    }} textAlign="center" fontStyle="normal" pt={2} fontSize={6} color="#cf8193" bold>   
+                    }} margin={2}  textAlign="center" fontStyle="normal" fontSize={10} alignSelf="center" color="#cf8193" bold>   
                     {item.type}              
                     </Text> 
-                  </HStack>              
+  
+
                 </Box>
+
+                 
                 </TouchableOpacity>
               }     keyExtractor={item=>item.id} /> 
             </Box>

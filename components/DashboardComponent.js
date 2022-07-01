@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, FlatList, Avatar, Box, HStack, Text, IconButton, Icon, Center, Heading, Stack, VStack, Spacer, Button, AspectRatio, ScrollView } from 'native-base';
 import { ImageBackground, StyleSheet, View, SafeAreaView } from "react-native";
-const image = { uri: "https://angrycatblnt.herokuapp.com/images/colorbackground.png" };
+const image = { uri: "https://angrycatblnt.herokuapp.com/images/yellowquiz.png" };
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { VirtualizedList } from 'react-native-web';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -27,7 +27,7 @@ class Dashboard extends Component {
         }, {
             id: "2",
             courseName: "Vocabulary",
-            courseContent: "Popular Topics and Quizzes",
+            courseContent: "Topics and Quizzes",
             avatarUrl: "https://angrycatblnt.herokuapp.com/images/vocabulary.png"          
         }, {
             id: "3",
@@ -47,17 +47,22 @@ class Dashboard extends Component {
             <View style={styles.container}>
                 <ImageBackground source={image} resizeMode="cover" style={{ flex:1 , justifyContent: "center" }}>
                         <Center flex={1} >
-                        <AspectRatio w="100%" ratio={16 / 9}>
-                      <Image mt={5} source={{
-                        uri: "https://angrycatblnt.herokuapp.com/images/welcome.png"
+
+                      <Avatar borderWidth={1} borderColor="yellow.50" mt={8}  mb={1} alignItems="center" height={150} w="150" source={{
+                        uri: "https://angrycatblnt.herokuapp.com/images/4.png"
                       }} alt="image" />
-                    </AspectRatio>
-                            <Box mt={5}  backgroundColor="white" height={387} borderRadius={10}>                       
+  <Heading mx={{
+                base: "auto",
+                md: 0
+              }} p="2" color="#cf8193">
+            ✦ ANGRY CAT ✦
+                </Heading>   
+                            <Box  height={420}  >                       
                                 <FlatList data={data}  renderItem={({
                                     item
-                                }) => <Box borderBottomWidth="1" _dark={{
+                                }) => <Box  borderBottomWidth="1" borderRightWidth="1" _dark={{
                                     borderColor: "muted.50"
-                                }} borderColor="coolGray.200" pl="2" pr="2" py="5">
+                                }} borderRadius={20} backgroundColor="white" borderColor="coolGray.200" pl="2" pr="2" py="5" margin={1} >
                                         <HStack space={3} justifyContent="space-between" >
                                             <Avatar size="48px" source={{
                                                 uri: item.avatarUrl
@@ -65,7 +70,7 @@ class Dashboard extends Component {
                                             <VStack>
                                                 <Text _dark={{                                               
                                                     color: "warmGray.50"
-                                                }}   fontSize={18} color="#cf8193" bold>
+                                                }}   fontSize={18} color="#cf8193" >
                                                     {item.courseName}
                                                 </Text>
                                                 
@@ -77,7 +82,7 @@ class Dashboard extends Component {
                                             </VStack>
                                             <Spacer/>  
                                             <VStack>
-                                            <Button onPress={() => this.DashboardNavigation(item.courseName)}  backgroundColor="#cf8193" flexDirection="column" alignSelf="stretch"><Icon size="2xl" color="white" icon as={Ionicons} name="play-circle-outline"/></Button>
+                                            <Button borderRadius={30} onPress={() => this.DashboardNavigation(item.courseName)}  backgroundColor="#cf8193" flexDirection="column" alignSelf="stretch"><Icon size="2xl" color="white" icon as={Ionicons} name="play-circle-outline"/></Button>
                                             </VStack>                                     
                                         </HStack>
                                     </Box>} keyExtractor={item =>item.id} />
