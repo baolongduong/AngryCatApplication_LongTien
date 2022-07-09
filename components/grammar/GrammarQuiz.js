@@ -82,10 +82,11 @@ class GrammarQuiz extends Component {
 
   componentDidUpdate(previousProps, previousState) {
     if (previousState.questionId !== this.state.questionId) {
-      this.componentDidMount();
+      setTimeout(()=>this.componentDidMount(),2000);     
     }
   }
 
+  
 
 
   openFinalModal(score, showModal) {
@@ -132,31 +133,28 @@ class GrammarQuiz extends Component {
   }
 
   nextQuestion(yourChoose) {
+    this.setState({yourChoose: yourChoose});
+    setTimeout(()=>this.setState({bonusShow: false}),2000);
     if (yourChoose == this.state.correct) {
       if (this.state.questionId == (this.state.quiz.length - 1)) {
+          this.setState({bonusShow: true});
+          this.setState({bonusScore: '+ 30'});
+          this.setState(previousState => ({ score: previousState.score + 30 }));
+          this.colorChoose("lime.500");     
         this.openFinalModal(this.state.score, true);
       }
       else {
         this.setState(previousState => ({ questionId: previousState.questionId + 1 }));
-        if (this.state.grammar.type == "Hard") {
-          this.setState({bonusShow: true});
-          this.setState({bonusScore: '+ 30'});
-          this.setState(previousState => ({ score: previousState.score + 30 }));
-        }
-        else if (this.state.grammar.type == "Medium") {
-          this.setState({bonusShow: true});
-          this.setState({bonusScore: '+ 20'});
-          this.setState(previousState => ({ score: previousState.score + 20 }));
-        }
-        else {
-          this.setState({bonusShow: true});
-          this.setState({bonusScore: '+ 10'});
-          this.setState(previousState => ({ score: previousState.score + 10 }));
-        }
+        this.setState({bonusShow: true});
+        this.setState({bonusScore: '+ 30'});
+        this.setState(previousState => ({ score: previousState.score + 30 }));
         this.colorChoose("lime.500");
       }
     }
     else {
+      if (this.state.questionId == (this.state.quiz.length - 1)) {
+        this.openFinalModal(this.state.score, true);
+        }
       this.setState(previousState => ({ questionId: previousState.questionId + 1 }));
       this.setState({bonusShow: true});
       this.setState({bonusScore: '+  0'});
@@ -174,7 +172,7 @@ class GrammarQuiz extends Component {
         <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
           <Center>
 
-            <Box  width={330} height={200} _dark={{
+            <Box  width={330} height={300} _dark={{
               borderColor: "muted.50"
             }} borderColor="coolGray.200" px="2" backgroundColor="white" borderLeftWidth={1} borderBottomWidth={1} borderRadius={10}>
 
@@ -190,26 +188,14 @@ class GrammarQuiz extends Component {
 
                   <Heading pt={4} textAlign="justify" fontWeight="normal" color="black" size="lg">
                   {this.state.question}
-                  </Heading>
-                
+                  </Heading>               
                 </VStack>
-
-            
-                <VStack>
-              <Collapse isOpen={this.state.bonusShow}>
-                <Box pt={3} width={70} height={60} alignSelf="center">
-                <Heading  fontWeight="bold" color="black" size="xl">
-                    {this.state.bonusScore}
-                  </Heading>
-                </Box>
-                </Collapse>
-              </VStack>
               </HStack>
             </Box>
           
 
 
-            <Animation.View animation="" duration={2000} delay={1000}>
+            <Animation.View animation="fadeIn" duration={2000} delay={1000}>
             <TouchableOpacity onPress={() => this.nextQuestion(this.state.choiceA)}>
               <Box mt={3} width={330} borderBottomWidth="1" borderRightWidth="1" backgroundColor="white" height={65} borderRadius={100} _dark={{
                 borderColor: "muted.50"
@@ -232,6 +218,7 @@ class GrammarQuiz extends Component {
             </TouchableOpacity>
             </Animation.View>
 
+            <Animation.View animation="fadeIn" duration={2000} delay={1000}>
             <TouchableOpacity onPress={() => this.nextQuestion(this.state.choiceB)}>
               <Box mt={3} width={330} borderBottomWidth="1" borderRightWidth="1" backgroundColor="white" height={65} borderRadius={100} _dark={{
                 borderColor: "muted.50"
@@ -253,7 +240,9 @@ class GrammarQuiz extends Component {
                 </HStack>
               </Box>
             </TouchableOpacity>
+            </Animation.View>
 
+            <Animation.View animation="fadeIn" duration={2000} delay={1000}>
             <TouchableOpacity onPress={() => this.nextQuestion(this.state.choiceC)}>
               <Box mt={3} width={330} borderBottomWidth="1" borderRightWidth="1" backgroundColor="white" height={65} borderRadius={100} _dark={{
                 borderColor: "muted.50"
@@ -274,41 +263,47 @@ class GrammarQuiz extends Component {
                 </HStack>
               </Box>
             </TouchableOpacity>
-
+            </Animation.View>
 
         
 
-            <Box >
-              <Modal backgroundColor="yellow.400" isOpen={this.state.showModal}>
+            <Box>
+              <Modal isOpen={this.state.bonusShow}>
                 <Modal.Content maxWidth="700px">
-                  <Modal.Header fontWeight="50">Quiz Score</Modal.Header>
-                  <Modal.Body backgroundColor="white">
-                    <AspectRatio w="100%" ratio={4 / 4}>
-                      <Image source={{
-                        uri: this.state.modalImage
-                      }} alt="image" />
-                    </AspectRatio>
+                  <Modal.Header fontWeight="50">Check your answer</Modal.Header>
+                  <Modal.Body backgroundColor="white">                  
                     <HStack margin={1} alignSelf="center">
                       <VStack >
+                          <Text alignSelf="center" fontSize={25} color={this.state.color} bold>
+                          {this.state.bonusScore}
+                          </Text>
+
                         <Text alignSelf="center" fontSize={18} color="#cf8193" bold>
-                          Your score is:  { }
-                          <Text alignSelf="center" fontSize={20} color="lime.400" bold>
-                            {this.state.score}/{(this.state.quiz.length - 1) * 10}
+                          Your answer is:  { }
+                          <Text alignSelf="center" fontSize={20} color={this.state.color} bold>
+                            {this.state.yourChoose}
                           </Text>
                         </Text>
 
+                        <Text alignSelf="center" fontSize={18} color="#cf8193" bold>
+                          Correct is:  { }
+                          <Text alignSelf="center" fontSize={20} color="lime.400" bold>
+                            {this.state.correct}
+                          </Text>
+                        </Text>
                       </VStack>
                     </HStack>
 
                   </Modal.Body>
                   <Modal.Footer alignSelf="center">
-                    <Button borderRadius={100} backgroundColor="pink.400" onPress={() => this.returnTogrammarularyPage()}>
+                    <Button borderRadius={100} backgroundColor="pink.400" onPress={() => this.setState({bonusShow: false})}>
                       OK
                     </Button>
                   </Modal.Footer>
                 </Modal.Content>
               </Modal>
             </Box>
+
           </Center>
         </ImageBackground>
       </View>

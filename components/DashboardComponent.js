@@ -54,11 +54,9 @@ class Dashboard extends Component {
 
               
                 
-                        <Box mt={20}  height="100%" justifyContent= "center"  >
-                       
-                    
-                        <VStack ml={5} mb={1} >
-                        <Heading  fontSize="3xl" fontWeight="light" color="#cf8193">
+                        <Box mt={20}  height="100%" justifyContent= "center"  >    
+                        <VStack mt={5} ml={5} mb={1} >
+                        <Heading  fontSize="3xl" fontWeight="normal" color="#cf8193">
                                 HOME
                             </Heading>    
                      </VStack>

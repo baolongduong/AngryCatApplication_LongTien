@@ -26,6 +26,7 @@ class Account extends Component {
       avatar: [],
       showModalAvatar: false,
       level: 0,
+      logoutModal: false
     }
   }
 
@@ -42,9 +43,6 @@ class Account extends Component {
         this.setState({ userData: UserData })
       })
     })
-
-  
-
   }
 
   uploadAvatar(image,Value)
@@ -76,6 +74,30 @@ class Account extends Component {
   }
 
   updateDataBase(Email, Password, Name, Value) {
+    if(Email == null || Email == "")
+    {
+      Email = this.state.userData.Email;
+    }
+    else
+    {
+      Email = Email;
+    }
+    if(Password == null || Password == "")
+    {
+      Password = this.state.userData.Password;
+    }
+    else
+    {
+      Password = Password;
+    }
+    if(Name == null || Name == "")
+    {
+      Name = this.state.userData.Name;
+    }
+    else
+    {
+      Name = Name;
+    }
     const dbRef = ref(getDatabase());
     set(child(dbRef, 'user/info/' + this.state.userData.Username), {
       Username: this.state.userData.Username,
@@ -86,9 +108,8 @@ class Account extends Component {
       GScore: this.state.userData.GScore,
       Image: this.state.userData.Image,
     });
+    this.setState({ showModal: Value });
     alert('Edit successfully !!!');
-    this.setState({ showModal: Value })
-      .catch((error) => alert('Edit unsuccessfully ', error));
   }
 
   openAvatar()
@@ -136,7 +157,7 @@ class Account extends Component {
                   }} />
                   <HStack ml={3} mt={2} alignSelf="center" >
                     <Button onPress={() => this.openAvatar()} backgroundColor="white" borderColor="#cf8193" borderWidth={1} borderRadius={100}><FontAwesome5 name="camera" size={15} color="#cf8193" /></Button>
-                    <Button onPress={() => this.logout()} ml={1} borderColor="#cf8193" borderWidth={1} backgroundColor="white" borderRadius={100}><FontAwesome5 name="sign-out-alt" size={15} color="#cf8193" /></Button>
+                    <Button onPress={() => this.setState({logoutModal:true})} ml={1} borderColor="#cf8193" borderWidth={1} backgroundColor="white" borderRadius={100}><FontAwesome5 name="sign-out-alt" size={15} color="#cf8193" /></Button>
                   </HStack>
                 </VStack>
   
@@ -187,6 +208,25 @@ class Account extends Component {
   
   
             <Box >
+              <Modal isOpen={this.state.logoutModal} onClose={() => this.setState({ logoutModal: false })}>
+                <Modal.Content maxWidth="800px">
+                  <Modal.CloseButton />
+                  <Modal.Header fontWeight="50">Are you want to logout?</Modal.Header>
+                  <Modal.Footer>
+                    <Button.Group space={2}>
+                      <Button variant="ghost" colorScheme="pink" onPress={() => this.setState({ logoutModal: false })}>
+                        Cancel
+                      </Button>
+                      <Button backgroundColor="pink.400" onPress={() => this.logout()}>
+                        Yes
+                      </Button>
+                    </Button.Group>
+                  </Modal.Footer>
+                </Modal.Content>
+              </Modal>
+            </Box>
+  
+            <Box >
               <Modal isOpen={this.state.showModal} onClose={() => this.setState({ showModal: false })}>
                 <Modal.Content maxWidth="800px">
                   <Modal.CloseButton />
@@ -198,15 +238,15 @@ class Account extends Component {
                     </FormControl>
                     <FormControl mt="3">
                       <FormControl.Label>Email:</FormControl.Label>
-                      <Input value={this.state.userData.Email} onChangeText={(text) => this.setState({ Email: text })} />
+                      <Input placeholder={this.state.userData.Email}  onChangeText={(text) => this.setState({ Email: text })} />
                     </FormControl>
                     <FormControl mt="3">
                       <FormControl.Label>Password:</FormControl.Label>
-                      <Input value={this.state.userData.Password} onChangeText={(text) => this.setState({ Password: text })} />
+                      <Input placeholder={this.state.userData.Password} onChangeText={(text) => this.setState({ Password: text })} />
                     </FormControl>
                     <FormControl mt="3">
                       <FormControl.Label>Name:</FormControl.Label>
-                      <Input value={this.state.userData.Name} onChangeText={(text) => this.setState({ Name: text })} />
+                      <Input placeholder={this.state.userData.Name} onChangeText={(text) => this.setState({ Name: text })} />
                     </FormControl>
                   </Modal.Body>
                   <Modal.Footer>
@@ -224,7 +264,6 @@ class Account extends Component {
                 </Modal.Content>
               </Modal>
             </Box>
-  
   
             <Box >
               <Modal isOpen={this.state.showModalAvatar} onClose={() => this.setState({ showModalAvatar: false })}>

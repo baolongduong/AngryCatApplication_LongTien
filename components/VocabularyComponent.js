@@ -9,7 +9,6 @@ import VocabularyTopic from './vocabulary/VocabularyTopic';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Loading from './LoadingComponent';
 
-
 class Vocabulary extends Component {
   constructor(props) {
     super(props);
@@ -50,7 +49,7 @@ class Vocabulary extends Component {
       <View style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
           <Center flex={1} >
-            <Box borderRadius={10}>         
+            <Box borderRadius={10}>   
               <FlatList numColumns={3} data={this.state.data}          
               renderItem={({
                 item
@@ -74,6 +73,7 @@ class Vocabulary extends Component {
                  
                 </TouchableOpacity>
               }     keyExtractor={item=>item.id} /> 
+
             </Box>
 
           </Center>
