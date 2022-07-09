@@ -12,6 +12,9 @@ import Grammar from './GrammarComponent';
 import Speaking from './SpeakingComponent';
 import VocabularyTopic from './vocabulary/VocabularyTopic';
 import TopicQuiz from './vocabulary/TopicQuiz';
+import GrammarLessons from './grammar/GrammarLessons';
+import GrammarQuiz from './grammar/GrammarQuiz';
+import About from './AboutComponent';
 
 const MainStack = createStackNavigator();
 
@@ -28,7 +31,10 @@ class DashboardNavigation extends Component {
       <MainStack.Screen name="VocabularyTopic" component={VocabularyTopic} options={{ headerTitleAlign:'center',headerBackTitle:'',headerBackTitleVisible:false,headerLeftLabelVisible:true}} /> 
       <MainStack.Screen name="TopicQuiz" component={TopicQuiz} options={{ headerTitleAlign:'center',headerBackTitle:'',headerBackTitleVisible:false,headerLeftLabelVisible:true}} /> 
       <MainStack.Screen name="Grammar" component={Grammar} options={{headerTitleAlign:'center',headerBackTitle:'',headerBackTitleVisible:false,headerLeftLabelVisible:true}} />  
+      <MainStack.Screen name="GrammarLessons" component={GrammarLessons} options={{headerTitleAlign:'center',headerBackTitle:'',headerBackTitleVisible:false,headerLeftLabelVisible:true}} />  
+      <MainStack.Screen name="GrammarQuiz" component={GrammarQuiz} options={{headerTitleAlign:'center',headerBackTitle:'',headerBackTitleVisible:false,headerLeftLabelVisible:true}} />  
       <MainStack.Screen name="Speaking" component={Speaking} options={{headerTitleAlign:'center',headerBackTitle:'',headerBackTitleVisible:false,headerLeftLabelVisible:true}} />  
+      <MainStack.Screen name="About" component={About} options={{headerTitleAlign:'center',headerBackTitle:'',headerBackTitleVisible:false,headerLeftLabelVisible:true}} />  
       </MainStack.Navigator>
     );
   }

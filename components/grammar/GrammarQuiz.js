@@ -1,7 +1,7 @@
 import React, { Component, useRef } from 'react';
 import { Progress, Hidden, Image, Box, HStack, Text, Avatar, Fab, IconButton, Center, Heading, Modal, Icon, Button, AspectRatio, ScrollView, VStack, Collapse } from 'native-base';
 import { ImageBackground, StyleSheet, View, TouchableOpacity } from "react-native";
-const image = { uri: "https://angrycatblnt.herokuapp.com/images/yellowquiz.png" };
+const image = { uri: "https://angrycatblnt.herokuapp.com/images/yellowBackground.png" };
 const image1 = { uri: "https://angrycatblnt.herokuapp.com/images/bomb.png" };
 import * as SecureStore from 'expo-secure-store';
 import { Audio } from 'expo-av';
@@ -10,11 +10,12 @@ import { getDatabase, ref, child, onValue, get, set } from 'firebase/database';
 import { useEffect } from 'react';
 import * as Animation from 'react-native-animatable'
 
-class TopicQuiz extends Component {
+class GrammarQuiz extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      vocab: [],
+      grammar: [],
       quiz: [],
 
       questionId: 1,
@@ -22,7 +23,6 @@ class TopicQuiz extends Component {
       choiceA: '',
       choiceB: '',
       choiceC: '',
-      choiceD: '',
       correct: '',
 
       yourChoose: '',
@@ -39,23 +39,22 @@ class TopicQuiz extends Component {
   }
 
   componentDidMount() {
-    //Get Vocabulary Content
-    SecureStore.getItemAsync('vocabularyId').then(data => {
-      let vocab = JSON.parse(data)
-      const id = vocab.id;
+    //Get grammarulary Content
+    SecureStore.getItemAsync('grammarId').then(data => {
+      let grammar = JSON.parse(data)
+      const id = grammar.id;
 
       const dbRef = ref(getDatabase());
-      get(child(dbRef, 'vocabulary/' + id)).then((snapshot) => {
-        const vocabData = snapshot.val();
-        this.setState({ vocab: vocabData })
+      get(child(dbRef, 'grammar/' + id)).then((snapshot) => {
+        const grammarData = snapshot.val();
+        this.setState({ grammar: grammarData })
       });
 
-      get(child(dbRef, 'vocabulary/' + id + '/quizN/')).then((snapshot) => {
+      get(child(dbRef, 'grammar/' + id + '/quiz/')).then((snapshot) => {
         const quizCount = snapshot.val();
         // console.log(quizCount);
         this.setState({ quiz: quizCount });
 
-        // var randomNumber = Math.floor(Math.random()*(this.state.quiz.length - 1))+1;
         var randomNumber = Math.floor(Math.random()*(this.state.quiz.length - 1))+1;
         // questionAnswer.push(randomNumber);
         // console.log(questionAnswer);
@@ -64,17 +63,16 @@ class TopicQuiz extends Component {
         //   randomNumber = Math.floor(Math.random()*(this.state.quiz.length - 1))+1;
         //   return randomNumber;
         // }
-        // onValue(child(dbRef, 'vocabulary/' + id + '/quizN/' + this.state.questionId), (snapshot) => {
-        onValue(child(dbRef, 'vocabulary/' + id + '/quizN/' + randomNumber), (snapshot) => {
+        // onValue(child(dbRef, 'grammarulary/' + id + '/quizN/' + this.state.questionId), (snapshot) => {
+        onValue(child(dbRef, 'grammar/' + id + '/quiz/' + randomNumber), (snapshot) => {
           const quizData = snapshot.val();
           // console.log(quizData);
           this.setState({
-            question: quizData.question,
-            choiceA: quizData.choiceA,
-            choiceB: quizData.choiceB,
-            choiceC: quizData.choiceC,
-            choiceD: quizData.choiceD,
-            correct: quizData.correct,
+            question: quizData.Question,
+            choiceA: quizData.ChoiceA,
+            choiceB: quizData.ChoiceB,
+            choiceC: quizData.ChoiceC,
+            correct: quizData.CorrectAnswer,
           });
         });
       });
@@ -88,22 +86,7 @@ class TopicQuiz extends Component {
     }
   }
 
-returnBonus(value)
-{
-  return <>
-   <Animation.View animation="fadeIn" duration={2000} delay={1000} easing="ease-in">
-                <VStack>
-              <Collapse isOpen={this.state.bonusShow}>
-                <Box pt={3} width={70} height={60} alignSelf="center">
-                <Heading  fontWeight="bold" color="black" size="xl">
-                   {value}
-                  </Heading>
-                </Box>
-                </Collapse>
-              </VStack>
-         </Animation.View>
-  </>
-}
+
 
   openFinalModal(score, showModal) {
     if (score >= (((this.state.quiz.length - 1) * 10) / 2)) {
@@ -125,8 +108,8 @@ returnBonus(value)
           Email: this.state.userData.Email,
           Name: this.state.userData.Name,
           Password: this.state.userData.Password,
-          VScore: this.state.userData.VScore + score,
-          GScore: this.state.userData.GScore,
+          VScore: this.state.userData.VScore,
+          GScore: this.state.userData.GScore + score,
           Image: this.state.userData.Image
         });
       })
@@ -136,9 +119,10 @@ returnBonus(value)
 
 
 
-  returnToVocabularyPage() {
-    this.props.navigation.navigate("VocabularyTopic");
+  returnTogrammarularyPage() {
+    this.props.navigation.navigate("GrammarLessons");
   }
+
 
   pronunciationPlay = async () => {
     console.log(this.state.mp3)
@@ -149,17 +133,17 @@ returnBonus(value)
 
   nextQuestion(yourChoose) {
     if (yourChoose == this.state.correct) {
-      if (this.state.questionId > (this.state.quiz.length - 1)) {
+      if (this.state.questionId == (this.state.quiz.length - 1)) {
         this.openFinalModal(this.state.score, true);
       }
       else {
         this.setState(previousState => ({ questionId: previousState.questionId + 1 }));
-        if (this.state.vocab.type == "Hard") {
+        if (this.state.grammar.type == "Hard") {
           this.setState({bonusShow: true});
           this.setState({bonusScore: '+ 30'});
           this.setState(previousState => ({ score: previousState.score + 30 }));
         }
-        else if (this.state.vocab.type == "Medium") {
+        else if (this.state.grammar.type == "Medium") {
           this.setState({bonusShow: true});
           this.setState({bonusScore: '+ 20'});
           this.setState(previousState => ({ score: previousState.score + 20 }));
@@ -168,7 +152,6 @@ returnBonus(value)
           this.setState({bonusShow: true});
           this.setState({bonusScore: '+ 10'});
           this.setState(previousState => ({ score: previousState.score + 10 }));
-          this.returnBonus(10);
         }
         this.colorChoose("lime.500");
       }
@@ -191,36 +174,42 @@ returnBonus(value)
         <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
           <Center>
 
-            <Box  width={350} height={70} _dark={{
+            <Box  width={330} height={200} _dark={{
               borderColor: "muted.50"
             }} borderColor="coolGray.200" px="2" backgroundColor="white" borderLeftWidth={1} borderBottomWidth={1} borderRadius={10}>
 
               <HStack space={20}>
-                <VStack p={1} justifyContent="space-between">
+                <VStack p={3} justifyContent="space-between">
                   <Heading  pt={1} color="amber.600" size="md">
-                    {this.state.vocab.type} <Text color="amber.700">({this.state.vocab.level})</Text>
+                    {this.state.grammar.TenseName} 
                   </Heading>
 
                   <Heading  fontWeight="light" color="black" size="xs">
                     Your questions: {this.state.questionId}/{this.state.quiz.length - 1}
                   </Heading>
+
+                  <Heading pt={4} textAlign="justify" fontWeight="normal" color="black" size="lg">
+                  {this.state.question}
+                  </Heading>
+                
                 </VStack>
 
-               
+            
+                <VStack>
+              <Collapse isOpen={this.state.bonusShow}>
+                <Box pt={3} width={70} height={60} alignSelf="center">
+                <Heading  fontWeight="bold" color="black" size="xl">
+                    {this.state.bonusScore}
+                  </Heading>
+                </Box>
+                </Collapse>
+              </VStack>
               </HStack>
             </Box>
           
-            <Center>
-              <Box backgroundColor="white" mt={2} width={200} height={200} rounded="xl" overflow="hidden" borderColor="white" borderWidth="1" alignItems="center">
-                <AspectRatio w="100%" ratio={4 / 4}>
-                  <Image w="100%" source={{
-                    uri: "https://angrycatblnt.herokuapp.com/vocabulary/"+this.state.question
-                  }} alt="image" />
-                </AspectRatio>
-              </Box>
-            </Center>
 
-            <Animation.View animation="fadeIn" duration={2000} delay={1000} easing="ease-in">
+
+            <Animation.View animation="" duration={2000} delay={1000}>
             <TouchableOpacity onPress={() => this.nextQuestion(this.state.choiceA)}>
               <Box mt={3} width={330} borderBottomWidth="1" borderRightWidth="1" backgroundColor="white" height={65} borderRadius={100} _dark={{
                 borderColor: "muted.50"
@@ -287,27 +276,7 @@ returnBonus(value)
             </TouchableOpacity>
 
 
-            <TouchableOpacity onPress={() => this.nextQuestion(this.state.choiceD)}>
-              <Box mt={3} mb={3} width={330} borderBottomWidth="1" borderRightWidth="1" backgroundColor="white" height={65} borderRadius={100} _dark={{
-                borderColor: "muted.50"
-              }} borderColor={this.state.color} p="2">
-                <HStack space={2} justifyContent="space-between" >
-                  <HStack>
-                    <Avatar alignSelf="center" width={50} source={{
-                      uri: "https://angrycatblnt.herokuapp.com/images/choiceD_straight.png"
-                    }} />
-
-                    <HStack pl={10}>
-                      <VStack alignSelf="center">
-                        <Text fontSize={20} color="#cf8193" bold>
-                          {this.state.choiceD}
-                        </Text>
-                      </VStack>
-                    </HStack>
-                  </HStack>
-                </HStack>
-              </Box>
-            </TouchableOpacity>
+        
 
             <Box >
               <Modal backgroundColor="yellow.400" isOpen={this.state.showModal}>
@@ -333,7 +302,7 @@ returnBonus(value)
 
                   </Modal.Body>
                   <Modal.Footer alignSelf="center">
-                    <Button borderRadius={100} backgroundColor="pink.400" onPress={() => this.returnToVocabularyPage()}>
+                    <Button borderRadius={100} backgroundColor="pink.400" onPress={() => this.returnTogrammarularyPage()}>
                       OK
                     </Button>
                   </Modal.Footer>
@@ -359,4 +328,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default TopicQuiz;
+export default GrammarQuiz;
