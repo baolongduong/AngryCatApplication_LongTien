@@ -7,7 +7,7 @@ import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { getDatabase, ref, child, onValue, get } from 'firebase/database';
 import VocabularyTopic from './vocabulary/VocabularyTopic';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import Loading from './LoadingComponent';
 
 
 class Vocabulary extends Component {

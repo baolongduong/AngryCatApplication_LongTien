@@ -32,6 +32,7 @@ class VocabularyTopic extends Component {
   }
 
   componentDidMount() {
+
     //Get Vocabulary Content
     SecureStore.getItemAsync('vocabularyId').then(data => {
       let vocab = JSON.parse(data)
@@ -69,7 +70,7 @@ class VocabularyTopic extends Component {
     const dbRef = ref(getDatabase());
     onValue(child(dbRef, 'vocabulary/' + this.state.vocab.id + '/words/'+ wordId), (snapshot) => {
       const value = snapshot.val();
-      console.log(value);
+      // console.log(value);
       this.setState({
         wordId: value.wId,
         image: "https://angrycatblnt.herokuapp.com/vocabulary/"+value.image,
@@ -97,11 +98,6 @@ vocabularyQuiz()
       <View style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
           <Center flex={1} >
-            {/* <Text _dark={{
-              color: "warmGray.50"
-            }} fontSize={18} color="#cf8193" bold>
-              Vocabulary Lessons
-            </Text> */}
             <VStack mt={3}>
               <Badge // bg="red.400"
                 colorScheme="success"  rounded="full" mb={-5} mr={-9} zIndex={1} variant="solid" alignSelf="flex-end" _text={{

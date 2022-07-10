@@ -3,7 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ranking from './RankingComponent';
 import DashboardNavigation from './DashboardNavigator';
-import NoteVocabulary from './NoteVocabularyComponent';
+import About from './AboutComponent';
 import Account from './AccountComponent';
 
 
@@ -26,6 +26,7 @@ class TabBar extends Component {
         />         
         <Tab.Screen name="Ranking" component={Ranking}
           options={{
+            headerTitleAlign:'center',
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name="star" color={color} size={size} />
             ),
@@ -40,14 +41,14 @@ class TabBar extends Component {
           }}
           tabBarOptions={{ showLabel: false }}
         />
-                 <Tab.Screen name="About" component={NoteVocabulary}
+                 {/* <Tab.Screen name="About" component={About}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name="explore" color={color} size={size} />
             ),
           }}
           tabBarOptions={{ showLabel: false }}
-        />
+        /> */}
       </Tab.Navigator>
 
     );
