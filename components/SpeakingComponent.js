@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, StatusBar, Box, HStack, Text, FlatList, Avatar, Icon, Center, Heading, Stack, Link, Button, AspectRatio, ScrollView, VStack } from 'native-base';
 import { ImageBackground, StyleSheet, View } from "react-native";
-const image = { uri: "https://angrycatblnt.herokuapp.com/images/colorbackground.png" };
+const image = { uri: "https://angrycatblnt.herokuapp.com/images/yellowquiz.png" };
 import * as SecureStore from 'expo-secure-store'
 import { getDatabase, ref, get, child, onValue } from 'firebase/database';
 
@@ -37,9 +37,9 @@ class Speaking extends Component {
         <ImageBackground source={image} resizeMode="cover" style={{ flex: 1, justifyContent: "center" }}>
           <Center flex={1}>
 
-            <VStack mt={3}>
-              <Heading p="2" color="amber.800">
-                How to learn ?
+            <VStack mt={2} >
+              <Heading p="4" color="amber.800" textAlign="center">
+                Speaking with paragraphs
               </Heading>
             </VStack>
 
@@ -52,16 +52,13 @@ class Speaking extends Component {
                   item
                 }) => <Box borderBottomWidth="1" _dark={{
                   borderColor: "muted.50"
-                }} borderColor="coolGray.200" py="7" pr="4" pl="4">
+                }} borderColor="coolGray.200" py="8" pr="5" pl="5">
                   <Text _dark={{
                           color: "warmGray.50"
                         }} color="amber.700" fontSize="xl" bold>
                           {item.Type}
                         </Text>
-                    <HStack pl={2} pr={2} space={13} justifyContent="space-between" >
-                      <VStack alignSelf="center">
-                        
-                      </VStack>
+
                       <VStack alignSelf="center">
                         <Text color="coolGray.400" _dark={{
                           color: "warmGray.200"
@@ -70,8 +67,6 @@ class Speaking extends Component {
                         </Text>
                       </VStack>
 
-                     
-                    </HStack>
                   </Box>}/>
               </Box>
             </Center>

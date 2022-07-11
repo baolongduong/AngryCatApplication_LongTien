@@ -89,7 +89,6 @@ class Pronunciation extends Component {
 
             <Center flex={1}>
               <Box backgroundColor="white" pt={1} pb={2} mt={3} mb={3} height="100%" width="380" >
-              <Animation.View animation="fadeIn" duration={2000} delay={1000}>
                 <FlatList numColumns={1} data={this.state.pronunciationList} renderItem={({
                   item
                 }) => <Box borderBottomWidth="1" _dark={{
@@ -116,7 +115,7 @@ class Pronunciation extends Component {
                         </Button>
                       </VStack>
                     </HStack>
-                  </Box>} keyExtractor={item => item.id} /></Animation.View>
+                  </Box>} keyExtractor={item => item.id} />
               </Box>
             </Center>
 

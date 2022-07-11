@@ -150,7 +150,8 @@ class Ranking extends Component {
 <FlatList  mb={2}  numColumns={3} data={this.state.listUser} renderItem={({
               item, index
             }) => {
-              if (index > 2) {
+              if (index > 2 && index < 9) 
+              {
                 return <>
                   <Box borderRadius={20} justifyContent="space-between" borderColor="coolGray.300" borderRightWidth="1" borderBottomWidth={1} mt={1} alignItems="center" backgroundColor="white" height="100" width="100" margin={1} _dark={{
                     borderColor: "muted.50"

@@ -35,6 +35,7 @@ class TopicQuiz extends Component {
       bonusShow: false,
       bonusScore: '',
       questionAnswer: [],
+      mp3:''
     };
   }
 
@@ -92,10 +93,20 @@ class TopicQuiz extends Component {
     }
   }
 
-returnBonus(value)
-{
-  
-}
+  correctSound = async (value) => {
+    if(value == true)
+    {
+      const { sound } = await Audio.Sound.createAsync(
+        { uri: "https://angrycatblnt.herokuapp.com/mp3/correct.mp3"  }, { shouldPlay: false });
+      await sound.playAsync();
+    }
+   else
+   {
+    const { sound } = await Audio.Sound.createAsync(
+      { uri:  "https://angrycatblnt.herokuapp.com/mp3/incorrect.mp3"  }, { shouldPlay: false });
+    await sound.playAsync();
+   }
+  }
 
   openFinalModal(score, showModal) {
     if (score >= (((this.state.quiz.length - 1) * 10) / 2)) {
@@ -142,6 +153,7 @@ returnBonus(value)
     this.setState({yourChoose: yourChoose});
     setTimeout(()=>this.setState({bonusShow: false}),2000);
     if (yourChoose == this.state.correct) {
+      this.correctSound(true);
       if (this.state.questionId == (this.state.quiz.length - 1)) {
         if (this.state.vocab.type == "Hard") {
           this.setState({bonusShow: true});
@@ -157,7 +169,6 @@ returnBonus(value)
           this.setState({bonusShow: true});
           this.setState({bonusScore: '+ 10'});
           this.setState(previousState => ({ score: previousState.score + 10 }));
-          this.returnBonus(10);
         }
         this.openFinalModal(this.state.score, true);
       }
@@ -177,12 +188,12 @@ returnBonus(value)
           this.setState({bonusShow: true});
           this.setState({bonusScore: '+ 10'});
           this.setState(previousState => ({ score: previousState.score + 10 }));
-          this.returnBonus(10);
         }
         this.colorChoose("lime.500");
       }
     }
     else {
+      this.correctSound(false);
       if (this.state.questionId == (this.state.quiz.length - 1)) {
         this.openFinalModal(this.state.score, true);
         }
@@ -236,7 +247,7 @@ returnBonus(value)
             <TouchableOpacity onPress={() => this.nextQuestion(this.state.choiceA)}>
               <Box mt={3} width={330} borderBottomWidth="1" borderRightWidth="1" backgroundColor="white" height={65} borderRadius={100} _dark={{
                 borderColor: "muted.50"
-              }} borderColor={this.state.color} p="2">
+              }} borderColor="coolGray.200" p="2">
                 <HStack space={2} justifyContent="space-between" >
                   <HStack>
                     <Avatar alignSelf="center" width={50} source={{
@@ -259,7 +270,7 @@ returnBonus(value)
             <TouchableOpacity onPress={() => this.nextQuestion(this.state.choiceB)}>
               <Box mt={3} width={330} borderBottomWidth="1" borderRightWidth="1" backgroundColor="white" height={65} borderRadius={100} _dark={{
                 borderColor: "muted.50"
-              }} borderColor={this.state.color} p="2">
+              }}  borderColor="coolGray.200" p="2">
                 <HStack space={2} justifyContent="space-between" >
                   <HStack>
                     <Avatar alignSelf="center" width={50} source={{
@@ -284,7 +295,7 @@ returnBonus(value)
             <TouchableOpacity onPress={() => this.nextQuestion(this.state.choiceC)}>
               <Box mt={3} width={330} borderBottomWidth="1" borderRightWidth="1" backgroundColor="white" height={65} borderRadius={100} _dark={{
                 borderColor: "muted.50"
-              }} borderColor={this.state.color} p="2">
+              }}  borderColor="coolGray.200" p="2">
                 <HStack space={2} justifyContent="space-between" >
                   <HStack>
                     <Avatar alignSelf="center" width={50} source={{
@@ -307,7 +318,7 @@ returnBonus(value)
             <TouchableOpacity onPress={() => this.nextQuestion(this.state.choiceD)}>
               <Box mt={3} mb={3} width={330} borderBottomWidth="1" borderRightWidth="1" backgroundColor="white" height={65} borderRadius={100} _dark={{
                 borderColor: "muted.50"
-              }} borderColor={this.state.color} p="2">
+              }}  borderColor="coolGray.200" p="2">
                 <HStack space={2} justifyContent="space-between" >
                   <HStack>
                     <Avatar alignSelf="center" width={50} source={{
@@ -370,16 +381,16 @@ returnBonus(value)
                           {this.state.bonusScore}
                           </Text>
 
-                        <Text alignSelf="center" fontSize={18} color="#cf8193" bold>
+                        <Text  fontSize={18} color="#cf8193" bold>
                           Your answer is:  { }
-                          <Text alignSelf="center" fontSize={20} color={this.state.color} bold>
+                          <Text  fontSize={20} color={this.state.color} bold>
                             {this.state.yourChoose}
                           </Text>
                         </Text>
 
-                        <Text alignSelf="center" fontSize={18} color="#cf8193" bold>
+                        <Text  fontSize={18} color="#cf8193" bold>
                           Correct is:  { }
-                          <Text alignSelf="center" fontSize={20} color="lime.400" bold>
+                          <Text fontSize={20} color="lime.400" bold>
                             {this.state.correct}
                           </Text>
                         </Text>

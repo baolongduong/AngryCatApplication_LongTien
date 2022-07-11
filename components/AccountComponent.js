@@ -288,7 +288,7 @@ class Account extends Component {
                       uri: item.Image
                     }} alt="image" />
                   </AspectRatio>
-                  <Button backgroundColor="pink.300" onPress={() => this.uploadAvatar((item.Image),false)}>Select</Button>
+                  <Button backgroundColor="pink.500" onPress={() => this.uploadAvatar((item.Image),false)}>Select</Button>
                   </Box>
                   </TouchableOpacity>
                 }/> 
