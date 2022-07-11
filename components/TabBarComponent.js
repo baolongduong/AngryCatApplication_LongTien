@@ -31,7 +31,7 @@ class TabBar extends Component {
               <MaterialIcons name="star" color={color} size={size} />
             ),
           }}
-          tabBarOptions={{ showLabel: false }}
+          tabBarOptions={{ showLabel: false   }}
         />
           <Tab.Screen name="Account" component={Account}
           options={{
